@@ -1,0 +1,13 @@
+What all features will task hold?
+1. What time it got created
+2.Wht time did I start solving it
+3.title of task
+4. description of task
+5.By wht time should I complete it
+6. When did I complete it 
+
+
+Features Implemented:
+1. Create a task 
+2. Fetch all tasks
+3. Fetch By Id
