@@ -6,9 +6,12 @@ const Home = () => {
   return (
     <Paper
       sx={{
-        minHeight: "100vh",
-        minWidth: "100vw",
-        // boxSizing: "border-box",
+        position: "fixed",
+        top: 0,
+        left: 0,
+        width: "100vw",
+        height: "100vh",
+        boxSizing: "border-box",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",

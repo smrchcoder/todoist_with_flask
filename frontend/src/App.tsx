@@ -5,6 +5,9 @@ import About from "./pages/About";
 import { ThemeProvider } from "@emotion/react";
 import theme from "./theme";
 import Navbar from "./components/Navbar";
+import Register from "./pages/Register";
+import Login from "./pages/Login";
+
 function App() {
   return (
     <ThemeProvider theme={theme}>
@@ -13,6 +16,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>
