@@ -13,22 +13,20 @@ import { useState } from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 
-const Login = () => {
+const Register = () => {
   const [formData, setFormData] = useState({
+    name: "",
     email: "",
     password: "",
+    confirmPassword: "",
   });
   const [errors, setErrors] = useState({
     email: false,
     password: false,
+    confirmPassword: false,
   });
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
-
-  const validateEmail = (email: string) => {
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return re.test(email);
-  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -38,18 +36,26 @@ const Login = () => {
     }));
   };
 
-  const handleOnSubmit = (e: React.FormEvent) => {
+  const validateEmail = (email: string) => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
     const newErrors = {
       email: !validateEmail(formData.email),
       password: formData.password.length < 6,
+      confirmPassword: formData.password !== formData.confirmPassword,
     };
+
     setErrors(newErrors);
 
     if (!Object.values(newErrors).some((error) => error)) {
-      // Handle successful login logic here
-      console.log("Login successful:", formData);
-      navigate("/"); // Example redirect
+      // Submit form logic here
+      console.log("Form submitted:", formData);
+      navigate("/"); // Redirect after successful registration
     }
   };
 
@@ -82,7 +88,7 @@ const Login = () => {
         }}
       >
         <Typography variant="h4" component="h1" align="center" gutterBottom>
-          Login to your account
+          Create an Account
         </Typography>
 
         <Typography
@@ -91,10 +97,21 @@ const Login = () => {
           align="center"
           mb={3}
         >
-          Continue Your Journey to Productivity
+          Join Task Manager to organize your work efficiently
         </Typography>
 
-        <form onSubmit={handleOnSubmit}>
+        <form onSubmit={handleSubmit}>
+          <FormControl fullWidth sx={{ mb: 2 }}>
+            <TextField
+              name="name"
+              label="Full Name"
+              variant="outlined"
+              value={formData.name}
+              onChange={handleChange}
+              required
+            />
+          </FormControl>
+
           <FormControl fullWidth sx={{ mb: 2 }}>
             <TextField
               name="email"
@@ -109,7 +126,7 @@ const Login = () => {
             />
           </FormControl>
 
-          <FormControl fullWidth sx={{ mb: 3 }}>
+          <FormControl fullWidth sx={{ mb: 2 }}>
             <TextField
               name="password"
               label="Password"
@@ -137,6 +154,20 @@ const Login = () => {
             />
           </FormControl>
 
+          <FormControl fullWidth sx={{ mb: 3 }}>
+            <TextField
+              name="confirmPassword"
+              label="Confirm Password"
+              type={showPassword ? "text" : "password"}
+              variant="outlined"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              error={errors.confirmPassword}
+              helperText={errors.confirmPassword ? "Passwords don't match" : ""}
+              required
+            />
+          </FormControl>
+
           <Button
             type="submit"
             fullWidth
@@ -144,13 +175,13 @@ const Login = () => {
             size="large"
             sx={{ mb: 2 }}
           >
-            Login
+            Sign Up
           </Button>
 
           <Typography variant="body2" align="center">
-            Don't have an account?{" "}
-            <Link href="/register" underline="hover">
-              Sign up
+            Already have an account?{" "}
+            <Link href="/login" underline="hover">
+              Sign in
             </Link>
           </Typography>
         </form>
@@ -159,4 +190,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
